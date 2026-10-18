@@ -469,30 +469,62 @@ textarea#story:disabled{opacity:.55}
 @media(max-width:720px){.reader{padding:12px 10px 22px}.read-head{margin-bottom:12px}.read-desk{padding:15px 14px 14px 27px;margin-top:12px}.read-desk .read-text{font-size:15px;line-height:1.85}.read-tool{min-width:150px;font-size:13px;padding:7px 8px;gap:6px}.read-tool canvas{width:30px;height:30px}.read-desk h1{font-size:22px}.read-nav{gap:8px;flex-wrap:wrap}.read-nav small{font-size:11px;min-width:150px}.pixel-stage .scene-name{font-size:10px;top:8px;left:8px}.pixel-stage .scene-whisper{bottom:6px;font-size:12px;padding:3px 9px;border-radius:8px}.read-tools{gap:8px}}
 
 
-/* Keep the scene visible while the parent reads and the child chooses. */
-.read-shell{max-width:1320px;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(330px,1fr);gap:18px 24px;align-items:start}
-.read-head{grid-column:1/-1;margin:0;min-height:42px}.read-head-actions{display:flex;gap:8px}
-.pixel-stage{position:sticky;top:14px;border-radius:4px;align-self:start}
-.pixel-stage .scene-name{font-size:11px;left:10px;top:10px;letter-spacing:.05em}
-.pixel-stage .scene-whisper{bottom:8px;font-size:13px;line-height:1.6;padding:4px 9px;border-radius:4px;white-space:normal;width:max-content;max-width:92%}
-.read-desk{margin:0;padding:20px 20px 16px 30px;border-radius:4px;min-width:0}
-.read-desk .read-text{white-space:pre-line;font-size:16px;line-height:1.85}
-.read-desk h1{font-size:25px;line-height:1.4}.read-tools{display:grid;grid-template-columns:1fr}
-.read-tool{min-width:0;width:100%;border-radius:4px;font-size:14px;line-height:1.6}
-.read-consequence{border-left:3px solid #a17c3b;border-radius:2px}.read-nav{flex-wrap:wrap;gap:10px}
-.read-nav small{flex-basis:100%}.read-nav .btn{margin-left:auto;min-height:42px}
-.read-quiet .read-consequence{border-color:#8c9676}
-.pixel-stage .scene-whisper{top:38px;bottom:auto;left:auto;right:8px;transform:none;max-width:70%;background:#15162fbf}
+/* The illustrated page keeps its 16:9 coordinates at every screen size. */
+.reader{--paper:#f6ecd7;--paper-edge:#c7ae83;--reading-ink:#463b2d;--muted-ink:#837052;--desk:#d9c3a0;padding:22px clamp(16px,3vw,48px);color:var(--reading-ink);background-color:var(--desk);background-image:radial-gradient(ellipse at 35% 0,#fff7df99,transparent 75%),repeating-linear-gradient(90deg,transparent 0 63px,#80614009 63px 64px),repeating-linear-gradient(0deg,transparent 0 63px,#80614009 63px 64px)}
+.read-shell{max-width:1360px;min-height:calc(100svh - 44px);display:flex;flex-direction:column;gap:22px}
+.read-head{margin:0;min-height:44px;flex:none}.read-head-actions{display:flex;gap:8px}
+.read-brand{font-size:24px}.read-mode{color:var(--muted-ink);font-size:11px;letter-spacing:.12em}
+.read-head .btn{color:var(--reading-ink);border:1px solid #a38c68;background:#f6ecd766;border-radius:3px;min-height:40px}
+.read-book{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(330px,1fr);margin:auto 0;position:relative;background:var(--paper);border:2px solid #a38a62;border-radius:3px;box-shadow:0 5px 0 -1px #e8d7b5,0 7px 0 -1px #a38a62,0 18px 38px #62482426;min-height:550px}
+.read-visual{min-width:0;padding:26px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--paper-edge);background:linear-gradient(90deg,transparent 96%,#70532b12)}
+.pixel-stage{position:relative;top:auto;width:100%;border:2px solid #746a61;border-radius:2px;box-shadow:none;flex:none}
+.pixel-stage .scene-name{color:#e9dfc7;font-size:11px;left:10px;top:10px;letter-spacing:.08em;border-radius:2px;padding:5px 8px}
+.scene-caption{min-height:58px;display:flex;align-items:center;justify-content:center;padding:10px 4px;text-align:center}
+.scene-whisper{font:14px/1.75 var(--f-body);color:var(--muted-ink);text-wrap:pretty}
+.read-progress{list-style:none;display:flex;justify-content:space-between;gap:5px;padding:0;margin:6px 0 0;color:var(--muted-ink);font-size:11px}
+.read-progress li{position:relative;flex:1;text-align:center;padding-top:17px}
+.read-progress li::before{content:"";position:absolute;top:3px;left:calc(50% - 3px);width:6px;height:6px;background:var(--paper);border:1px solid #b5a07c;z-index:1}
+.read-progress li:not(:last-child)::after{content:"";position:absolute;top:6px;left:50%;width:calc(100% + 5px);height:1px;background:var(--paper-edge)}
+.read-progress .passed::before{background:#a58b5c;border-color:#a58b5c}
+.read-progress [aria-current=step]{color:var(--reading-ink);font-weight:600}
+.read-progress [aria-current=step]::before{background:#b97b38;border-color:#b97b38;box-shadow:0 0 0 3px #b97b3822}
+.read-desk{margin:0;padding:30px clamp(22px,2.5vw,40px);border:0;border-radius:0;min-width:0;background:linear-gradient(90deg,#70532b0a,transparent 16%);box-shadow:none;display:flex;flex-direction:column;justify-content:center;color:var(--reading-ink)}
+.read-desk .read-kicker{font-size:11px;color:var(--muted-ink);letter-spacing:.15em;margin-bottom:12px}
+.read-desk h1{font-size:28px;line-height:1.45;margin-bottom:18px;text-wrap:balance}
+.read-desk .read-text{white-space:pre-line;font-size:16px;line-height:2}
+.read-desk .read-question{margin:16px 0 0;color:var(--muted-ink);line-height:1.7}
+.read-tools{display:grid;grid-template-columns:1fr;gap:10px;margin-top:20px}
+.read-tool{min-width:0;width:100%;border-radius:3px;font-size:14px;line-height:1.65;background:#fffaf0;border:1px solid #c5ab7c;min-height:58px;transition:background .15s,border-color .15s;box-shadow:0 2px 0 #c7ae8333}
+.read-tool canvas{width:36px;height:36px}
+.read-tool[aria-pressed=true]{background:#f5dfad;border-color:#ac7b38;box-shadow:inset 3px 0 #ac7b38}
+.read-tool[aria-pressed=true]::after{content:"";margin-left:auto;margin-right:5px;width:6px;height:11px;flex:none;border:solid #92662f;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.read-tool:disabled{opacity:.4}.read-tool:disabled[aria-pressed=true]{opacity:1}
+.read-tool:active:not(:disabled){cursor:grabbing}
+.read-tool:focus-visible,.read-head .btn:focus-visible,.read-nav .btn:focus-visible,#readCanvas:focus-visible{outline:2px solid #b07838;outline-offset:4px}
+.read-desk .read-consequence{border-left:2px solid #b18b51;border-radius:0;background:#ebddbd88;padding:10px 12px;margin:14px 0 0;font-size:14px;line-height:1.85}
+.read-nav{flex-wrap:wrap;gap:12px;margin-top:20px;border-top:1px solid var(--paper-edge);padding-top:14px}
+.read-nav small{flex-basis:100%;color:var(--muted-ink);font-size:12px;line-height:1.75}
+.read-nav .btn{margin-left:auto;min-height:42px;border-radius:3px}
+.read-ending{margin:clamp(12px,3vh,32px) auto;padding:24px;background:var(--paper);border:2px solid var(--paper-edge);box-shadow:0 5px 0 #bda47e66;color:var(--reading-ink)}
+.read-ending h1{font:28px/1.5 var(--f-display);margin:12px 0 20px}.read-ending p{font:16px/1.85 var(--f-body);margin:16px 0}.read-ending .read-kicker{font-size:11px}.read-ending .actions{margin-top:20px}.read-ending .btn{border-radius:3px}
+.read-quiet{--paper:#323c49;--paper-edge:#57616a;--reading-ink:#dcd4be;--muted-ink:#b0b1a5;--desk:#24323b;background-image:radial-gradient(ellipse at 35% 0,#708a7444,transparent 75%),repeating-linear-gradient(90deg,transparent 0 63px,#a1b49b06 63px 64px)}
+.read-quiet .read-head .btn{color:var(--reading-ink);border-color:#6e797a;background:#88978512}
+.read-quiet .read-book{border-color:#69736e;box-shadow:0 5px 0 -1px #47515a,0 7px 0 -1px #69736e,0 18px 38px #101a2726}
+.read-quiet .read-desk{background:linear-gradient(90deg,#141c281a,transparent 16%);color:var(--reading-ink)}
+.read-quiet .read-tool{background:#3c4852;border-color:#6e7a77}.read-quiet .read-tool[aria-pressed=true]{background:#4a554e;border-color:#9b9e7f;box-shadow:inset 3px 0 #9b9e7f}.read-quiet .read-tool[aria-pressed=true]::after{border-color:#c9c8a5}
+.read-quiet .read-desk .read-consequence{background:#414b5077;border-color:#a5ac87}.read-quiet .read-progress [aria-current=step]::before{background:#b5bd94;border-color:#b5bd94;box-shadow:0 0 0 3px #b5bd9422}
 .volume-control{display:flex;align-items:center;gap:10px;width:58%}.volume-control input{width:100%;accent-color:#9a6529}.volume-control output{font-size:12px;min-width:3ch}
 @media(max-width:850px){
- .reader{padding:10px 10px 18px}.read-shell{display:block;max-width:650px}.read-head{margin-bottom:10px}.read-brand{font-size:22px}.read-mode{font-size:10px}
- .pixel-stage{top:0;z-index:2;width:min(100%,calc(31svh * 16 / 9));margin:0 auto 12px;box-shadow:0 6px 14px #0007}
- .read-desk{padding:14px 14px 0 25px}.read-desk h1{font-size:22px}.read-desk .read-text{font-size:15px;line-height:1.8}
- .read-desk .read-kicker{display:none}.read-tools{gap:7px;margin-top:10px}.read-tool{min-height:48px;padding:6px 9px}.read-tool canvas{width:30px;height:30px}
- .read-nav{position:sticky;bottom:0;z-index:3;background:#f4e9cf;margin:10px -14px 0 -25px;padding:9px 14px 10px 25px;border-top:1px solid #c5ac82}
- .read-nav small{font-size:11px;flex:1;min-width:130px}.read-quiet .read-nav{background:#252b3f;border-color:#565b6d}
- .pixel-stage .scene-name{font-size:10px;top:6px;left:6px;padding:3px 6px}.pixel-stage .scene-whisper{font-size:10px;top:29px;bottom:auto;padding:3px 6px}
+ .reader{padding:12px 10px 22px}.read-shell{max-width:650px;min-height:0;gap:14px}.read-brand{font-size:22px}.read-mode{font-size:10px}.read-head{gap:8px}
+ .read-book{display:block;min-height:0}.read-visual{position:sticky;top:-12px;z-index:2;padding:10px 10px 0;border-right:0;border-bottom:1px solid var(--paper-edge);background:var(--paper)}
+ .pixel-stage{width:min(100%,calc(29svh * 16 / 9));margin:0 auto}.scene-caption{min-height:40px;padding:7px 2px}.scene-whisper{font-size:12px;line-height:1.65}.read-progress{display:none}
+ .read-desk{padding:20px 18px 0;background:none}.read-desk h1{font-size:24px;margin-bottom:12px}.read-desk .read-text{font-size:15px;line-height:1.9}.read-desk .read-kicker{display:none}
+ .read-tools{gap:8px;margin-top:14px}.read-tool{min-height:50px;padding:7px 9px}.read-tool canvas{width:30px;height:30px}
+ .read-nav{position:sticky;bottom:0;z-index:3;background:var(--paper);margin:16px -18px 0;padding:10px 18px 12px;gap:8px}
+ .read-nav small{font-size:11px;flex:1;min-width:130px}.read-quiet .read-nav{background:var(--paper);border-color:var(--paper-edge)}
+ .pixel-stage .scene-name{font-size:10px;top:6px;left:6px;padding:3px 6px}.read-ending{padding:18px}.read-ending h1{font-size:28px}
 }
+@media(prefers-reduced-motion:reduce){.read-tool{transition:none}}
 
 
 .toybook-btn{color:var(--paper-ink);border-color:#b9a47c;font-size:12px}
@@ -2963,27 +2995,27 @@ function renderReader(){
  const p=R.source?{title:R.source.narrative.headings[R.i],text:R.source.log[R.i].mom,child:R.source.log[R.i].kid,toy:R.source.log[R.i].toy,topic:R.source.log[R.i].topic}:narrativePage(R.i,S.narrative,quiet);
  R.page=p;R.chosen=false;R.done=false;R.progress=0;R.animating=false;R.selected=null;R.actions=readerActions(p,R);R.age=0;R.message='';
  ov.className='reader'+(quiet?' read-quiet':'');
- ov.innerHTML=`<div class="read-shell"><header class="read-head"><div class="read-brand">再讲一个<span class="read-mode">${SCENES[R.mode][0]}</span></div><div class="read-head-actions"><button class="btn ghost" id="readSound" type="button" aria-pressed="${SET.sound}">${SET.sound?'声音 开':'声音 关'}</button><button class="btn ghost" id="readMenu" type="button">菜单</button></div></header><div class="pixel-stage"><canvas id="readCanvas" width="960" height="540" aria-label="${esc(p.title)}，可把手里的东西送到场景里" tabindex="0"></canvas><span class="scene-name">${esc(p.title)} · ${R.i+1} / 6</span><span class="scene-whisper" id="sceneWhisper">${quiet?'可以轻轻碰一下，也可以让大人接着讲。':'把想出来的办法，放进这个故事里。'}</span></div><article class="read-desk"><p class="read-kicker">${esc(S.narrative.title)}</p><h1>${esc(p.title)}</h1><p class="read-text">${esc(p.text)}</p>${p.question?`<p class="read-question">${esc(p.question)}</p>`:''}<div class="read-tools">${R.actions.map((a,j)=>`<button class="read-tool" type="button" data-choice="${j}" aria-pressed="false"><span>${esc(a.label)}</span></button>`).join('')}</div><div id="readResult" aria-live="polite"></div><nav class="read-nav"><small id="readHint">${quiet?'这里没有任务。想动手就轻轻碰一下，读完再接着讲。':'拿起一样东西，拖进画面；也可以先点按钮，再点画面。'}</small><button class="btn ghost" id="performBtn" type="button" hidden>放进故事</button><button class="btn" id="readNext" type="button" ${quiet?'':'hidden'}>${R.i===5?quiet?'轻轻合上':'把故事留下':'接着讲'}</button></nav></article></div>`;
+ ov.innerHTML=`<div class="read-shell"><header class="read-head"><div class="read-brand">再讲一个<span class="read-mode">${SCENES[R.mode][0]}</span></div><div class="read-head-actions"><button class="btn ghost" id="readSound" type="button" aria-pressed="${SET.sound}">${SET.sound?'声音 开':'声音 关'}</button><button class="btn ghost" id="readMenu" type="button">菜单</button></div></header><div class="read-book"><section class="read-visual" aria-label="故事画面"><div class="pixel-stage"><canvas id="readCanvas" width="960" height="540" aria-label="${esc(p.title)}，可把手里的东西送到场景里" tabindex="0"></canvas><span class="scene-name">第 ${R.i+1} 页 / 共 6 页</span></div><div class="scene-caption"><span class="scene-whisper" id="sceneWhisper">${quiet?'可以轻轻碰一下，也可以让大人接着讲。':'把想出来的办法，放进这个故事里。'}</span></div><ol class="read-progress" aria-label="故事进度">${STORY_STEPS.map((step,i)=>`<li${i===R.i?' aria-current="step"':i<R.i?' class="passed"':''}>${step}</li>`).join('')}</ol></section><article class="read-desk"><p class="read-kicker">${esc(S.narrative.title)}</p><h1>${esc(p.title)}</h1><p class="read-text">${esc(p.text)}</p>${p.question?`<p class="read-question">${esc(p.question)}</p>`:''}<div class="read-tools">${R.actions.map((a,j)=>`<button class="read-tool" type="button" data-choice="${j}" aria-pressed="false"><span>${esc(a.label)}</span></button>`).join('')}</div><div id="readResult" aria-live="polite"></div><nav class="read-nav"><small id="readHint">${quiet?'这里没有任务。想动手就轻轻碰一下，读完再接着讲。':'拿起一样东西，拖进画面；也可以先点按钮，再点画面。'}</small><button class="btn ghost" id="performBtn" type="button" hidden>放进故事</button><button class="btn" id="readNext" type="button" ${quiet?'':'hidden'}>${R.i===5?quiet?'轻轻合上':'把故事留下':'接着讲'}</button></nav></article></div></div>`;
  R.canvas=$('#readCanvas');R.g=R.canvas.getContext('2d');R.g.imageSmoothingEnabled=false;
  R.actions.forEach((a,j)=>{const b=ov.querySelector(`[data-choice="${j}"]`);b.prepend(cloneCanvas(PIXSPR[a.id]||SP[a.id]));b.onclick=()=>{selectReaderTool(j);if(quiet)performReaderAction();};b.onpointerdown=e=>beginReaderDrag(e,j);});
- R.canvas.onpointerup=e=>{if(R.selected!==null&&!R.done){const box=R.canvas.getBoundingClientRect();const x=(e.clientX-box.left)/box.width*320,y=(e.clientY-box.top)/box.height*180;const target=pixelTarget(R);if(Math.hypot(x-target[0],y-target[1])<58)performReaderAction();else{R.message=quiet?'慢慢来，放到小灯旁边。':'放到发光的小圈里，故事就会动起来。';$('#sceneWhisper').textContent=R.message;}}};
+ R.canvas.onpointerup=e=>{if(R.selected!==null&&!R.done){const box=R.canvas.getBoundingClientRect();const x=(e.clientX-box.left)/box.width*320,y=(e.clientY-box.top)/box.height*180;const target=pixelTarget(R);if(Math.hypot(x-target[0],y-target[1])<58)performReaderAction();else{R.message=quiet?'慢慢来，放到小灯旁边。':'放到发光的位置，故事就会动起来。';$('#sceneWhisper').textContent=R.message;}}};
  R.canvas.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();if(R.selected===null)selectReaderTool(0);performReaderAction();}};
  $('#readSound').onclick=()=>{AU.init();SET.sound=!SET.sound;store('sound',SET.sound);syncSound();};$('#readMenu').onclick=()=>openMenu();$('#performBtn').onclick=performReaderAction;$('#readNext').onclick=advanceReader;
  (quiet?$('#readNext'):ov.querySelector('[data-choice]')).focus({preventScroll:true});ov.scrollTop=0;
 }
 function selectReaderTool(j){
- const R=READER;if(R.done||R.animating)return;
+ const R=READER;if(R.done||R.animating||R.selected===j)return;
  R.selected=j;R.actions.forEach((a,i)=>$('#readerOv').querySelector(`[data-choice="${i}"]`).setAttribute('aria-pressed',i===j));
  $('#performBtn').hidden=false;$('#performBtn').textContent=R.mode==='bedtime'?'轻轻放好':'放进故事';
  $('#sceneWhisper').textContent=R.mode==='bedtime'?'轻轻碰一下画面里的小灯。':'放到发光处，看看这个办法会怎样。';
  if(R.mode==='day')AU.pop();
 }
 function beginReaderDrag(e,j){
- const R=READER;if(R.done||e.button!==0)return;selectReaderTool(j);
+ const R=READER;if(R.done||R.animating||e.button!==0)return;selectReaderTool(j);
  const start=[e.clientX,e.clientY],ghost=cloneCanvas(PIXSPR[R.actions[j].id]||SP[R.actions[j].id]);ghost.className='read-drag';ghost.hidden=true;document.body.appendChild(ghost);
  const move=ev=>{if(Math.hypot(ev.clientX-start[0],ev.clientY-start[1])>7)ghost.hidden=false;ghost.style.left=ev.clientX-30+'px';ghost.style.top=ev.clientY-30+'px';};
- const up=ev=>{const dragged=!ghost.hidden;ghost.remove();document.removeEventListener('pointermove',move);document.removeEventListener('pointerup',up);if(dragged&&READER===R){const b=R.canvas.getBoundingClientRect();if(ev.clientX>=b.left&&ev.clientX<=b.right&&ev.clientY>=b.top&&ev.clientY<=b.bottom)performReaderAction();}};
- document.addEventListener('pointermove',move);document.addEventListener('pointerup',up);
+ const up=ev=>{const dragged=!ghost.hidden;ghost.remove();document.removeEventListener('pointermove',move);document.removeEventListener('pointerup',up);document.removeEventListener('pointercancel',up);if(ev.type!=='pointercancel'&&dragged&&READER===R){const b=R.canvas.getBoundingClientRect();if(ev.clientX>=b.left&&ev.clientX<=b.right&&ev.clientY>=b.top&&ev.clientY<=b.bottom)performReaderAction();}};
+ document.addEventListener('pointermove',move);document.addEventListener('pointerup',up);document.addEventListener('pointercancel',up);
 }
 function performReaderAction(){
  const R=READER;if(!R||R.selected===null||R.done||R.animating)return;
@@ -3013,7 +3045,7 @@ function advanceReader(){
 function finishNarrative(){
  const R=READER,quiet=R.mode==='bedtime';S.log=R.pages.map(({title,...p})=>p);S.chars=S.log.reduce((sum,l)=>sum+l.mom.replace(/\s/g,'').length,0);S.narrative.headings=R.pages.map(p=>p.title);S.narrative.pixel=true;S.toys=[...new Set(S.log.map(l=>l.toy))].map(id=>({id}));S.phase='dawn';
  if(!R.source&&!R.saved){saveBook();R.saved=true;}
- $('#readerOv').innerHTML=`<div class="read-ending"><p class="read-kicker">${SCENES[R.mode][0]}</p><h1>${quiet?'小灯回家了。小满也回家了。':'这趟旅程，是你们一起走完的。'}</h1><canvas id="endPixels" width="640" height="360" style="width:100%;image-rendering:pixelated;border:2px solid #565f76;border-radius:8px"></canvas><p>${quiet?'窗边的灯还亮着。<br>故事到这里，晚安。':'小船怎么过河，朋友怎样认路，<br>妈妈如何回应，都留在了故事里。'}</p><div class="actions">${quiet?'<button class="btn ghost" id="readClose" type="button">轻轻合上</button>':'<button class="btn" id="readBook" type="button">翻开这本绘本</button><button class="btn ghost" id="readClose" type="button">回到目录</button>'}</div></div>`;
+ $('#readerOv').innerHTML=`<div class="read-ending"><p class="read-kicker">${SCENES[R.mode][0]}</p><h1>${quiet?'小灯回家了。小满也回家了。':'这趟旅程，是你们一起走完的。'}</h1><canvas id="endPixels" width="640" height="360" style="width:100%;image-rendering:pixelated;border:2px solid #565f76;border-radius:2px"></canvas><p>${quiet?'窗边的灯还亮着。<br>故事到这里，晚安。':'小船怎么过河，朋友怎样认路，<br>妈妈如何回应，都留在了故事里。'}</p><div class="actions">${quiet?'<button class="btn ghost" id="readClose" type="button">轻轻合上</button>':'<button class="btn" id="readBook" type="button">翻开这本绘本</button><button class="btn ghost" id="readClose" type="button">回到目录</button>'}</div></div>`;
  pixelWorld(pgx,5,S.narrative,quiet,0,1);const g=$('#endPixels').getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(PIXEL,0,0,640,360);R.canvas=null;
  $('#readClose').onclick=()=>{leaveReader();openMenu();};if(!quiet)$('#readBook').onclick=()=>{leaveReader();openBook();};(quiet?$('#readClose'):$('#readBook')).focus();
 }
