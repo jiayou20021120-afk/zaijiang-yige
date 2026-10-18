@@ -548,6 +548,35 @@ textarea#story:disabled{opacity:.55}
 .toybook header{display:flex;justify-content:space-between;align-items:center;gap:18px}.toybook h3{font:26px var(--f-display);margin:4px 0}.toybook header small{color:#8a6b45}.toybook-note{font-size:14px;line-height:1.7}
 .toybook-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.toybook-item{display:grid;grid-template-columns:70px 1fr;gap:14px;background:#fffaf0;border:1.5px solid #cdb88e;border-radius:10px;padding:14px}.toybook-art{display:flex;align-items:center;justify-content:center}.toybook-art canvas{width:64px;height:64px;image-rendering:pixelated}.toybook-item h4{font:18px var(--f-display);margin:0 0 5px}.toybook-item h4 span{font:11px var(--f-body);color:#68834b;margin-left:6px}.toybook-item small{color:#97683e;font-size:12px}.toybook-item p{font-size:13px;line-height:1.6;margin:8px 0}.toybook-item .toybook-source{color:#8a6b45}.toybook-item .btn{font-size:12px;padding:6px 9px}
 @media(max-width:600px){.toybook{padding:15px;max-height:80vh}.toybook-grid{grid-template-columns:1fr}.toybook-item{grid-template-columns:52px 1fr;padding:10px;gap:10px}.toybook-art canvas{width:48px;height:48px}.slots{gap:4px}.slot{width:36px;height:36px}.toybook h3{font-size:21px}}
+
+/* The room and controls stay visible together on landscape screens. */
+#app{max-width:1360px;min-height:100svh;padding:20px 24px 28px;gap:18px;justify-content:center}
+.hud{gap:10px}.hud .brand{margin-right:6px}.hud .iconbtn{min-height:34px;border-radius:3px}
+.dream-path{display:flex;gap:20px;align-items:center;margin:0;padding:0;list-style:none;color:#a9a6c8;font-size:12px;letter-spacing:.06em}
+.dream-path li{display:flex;align-items:center;gap:7px}.dream-path i{font:11px var(--f-body);font-style:normal;width:20px;height:20px;border:1px solid #5f6086;display:grid;place-items:center;border-radius:2px}
+.dream-path [aria-current=step]{color:#ffe1a1}.dream-path [aria-current=step] i{background:#554568;border-color:#c1a276}
+#app .stage{border-radius:3px;box-shadow:0 0 0 2px #53516f,0 12px 30px #08091844}
+#app .bubbles{position:static;margin-top:14px;display:flex;gap:10px;min-height:0;pointer-events:auto}
+#app .bubble{max-width:50%;flex:1;border-radius:3px;font-size:14px;padding:10px 12px;line-height:1.8;box-shadow:none}
+#app .bubble.kid{margin-left:auto}#app .caption{border-radius:3px;font-size:13px;max-width:94%;padding:6px 10px;letter-spacing:0}
+#app .desk{border-radius:3px;padding:20px;box-shadow:0 6px 0 #b7a08033,0 14px 30px #08091822;background-image:repeating-linear-gradient(180deg,transparent 0 29px,#dccaa444 29px 30px)}
+#deskStory>.row:first-child{gap:12px 8px}.slots{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));width:100%;gap:6px}.slot{width:100%;aspect-ratio:1;height:auto;border-radius:3px}.slot canvas{width:85%;height:85%}
+#app .toybook-btn{margin-left:auto}#app .deck{width:100%;margin:2px 0 4px;justify-content:center;min-height:38px;border-radius:3px;box-shadow:2px 2px 0 #c9b083}
+#app textarea#story{padding:10px 0;min-height:142px;margin:8px 0;font-size:16px;line-height:1.9;border-top:1px solid #c7ae83;border-bottom:1px solid #c7ae83}
+#app .desk .btn{border-radius:3px;min-height:42px}#app .hint{font-size:12px;line-height:1.8;flex-basis:100%}#sendBtn,#startNight{margin-left:auto}
+#app .fan{position:static;margin:8px 0 14px;flex-direction:column}#app .icard{max-width:none;border-radius:3px;font-size:13px;padding:8px 10px;box-shadow:0 3px 8px #39291818}
+#app .tchip,#app .spbtn,#app .tinfo{border-radius:3px}#app .tray,#app .spec{gap:7px}#app .phase-t{font-size:18px;line-height:1.7}
+#app .dawn{flex-basis:100%}#app .wavepv{margin:8px 0}#app .tinfo{font-size:12px}
+@media(min-width:1050px){#app{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(340px,1fr);grid-template-rows:auto auto auto;align-content:center;align-items:start}.hud,.dream-path{grid-column:1/-1}#app .stage-wrap{grid-column:1;position:relative}#app .desk{grid-column:2;grid-row:3;min-width:0}}
+@media(max-width:1049px){#app{max-width:800px;justify-content:flex-start;padding:14px}.dream-path{gap:15px}.slots{max-width:420px}.slot{max-height:46px}#app textarea#story{min-height:105px}#app .deck{width:auto;margin-left:auto}#app .hint{flex-basis:180px}}
+@media(max-width:500px){#app{padding:10px;gap:12px}.hud .brand{font-size:22px}.hud .meter{order:3;width:100%;margin:0}.hud .bar{flex:1}.hud .turns{margin-left:auto;font-size:11px}.hud .chip{font-size:10px;padding:2px 6px}.hud .iconbtn{padding:3px 7px;letter-spacing:0;font-size:11px}.dream-path{justify-content:space-between;gap:5px;font-size:11px}.dream-path i{width:18px;height:18px}#app .bubbles{flex-direction:column;margin-top:10px}#app .bubble{max-width:100%;width:100%;font-size:13px}#app .desk{padding:14px}.slots{gap:4px}.slot{max-height:42px}#app .toybook-btn{font-size:11px}#app .caption{font-size:11px;bottom:7px}#app .slotlbl{font-size:11px}.hud{gap:7px}}
+.release-dialog{width:min(560px,calc(100vw - 28px));max-height:calc(100svh - 36px);padding:0;border:2px solid #af9874;border-radius:4px;background:#f6ecd7;color:#463b2d;box-shadow:0 6px 0 #bba782,0 24px 70px #0006;overflow:auto;font-family:var(--f-body)}
+.release-dialog::backdrop{background:#101328c9;backdrop-filter:blur(5px)}
+.release-head{padding:24px 28px 18px;border-bottom:1px solid #d4bf98;background:linear-gradient(125deg,#efe0be,#f8efd9)}
+.release-eyebrow{font-size:11px;letter-spacing:.15em;color:#8a7150;margin:0 0 10px}.release-head h2{font:29px/1.4 var(--f-display);margin:0}.release-version{display:inline-block;margin-left:10px;padding:3px 8px;background:#494061;color:#f7e6b8;font:13px var(--f-body);vertical-align:middle;border-radius:2px}
+.release-content{padding:20px 28px}.release-content>p{font-size:14px;margin:0 0 15px;color:#80684d;line-height:1.8}.release-items{list-style:none;padding:0;margin:0;display:grid;gap:16px}.release-items b{font:17px var(--f-display);display:block;margin-bottom:4px}.release-items p{font-size:13px;line-height:1.8;margin:0;color:#796348}.release-history{border-top:1px solid #d4bf98;margin-top:20px;padding-top:14px;font-size:12px}.release-history summary{cursor:pointer;color:#80684d}.release-history ol{padding-left:20px;line-height:1.9}.release-history li{margin:8px 0}.release-history strong{color:#4d3b2e}.release-actions{display:flex;gap:10px;justify-content:flex-end;padding:16px 28px;position:sticky;bottom:0;background:#f6ecd7;border-top:1px solid #d4bf98}.release-actions .btn{border-radius:3px;font-size:15px}.release-dialog:focus{outline:none}
+@media(max-width:500px){.release-head{padding:20px}.release-content{padding:18px 20px}.release-head h2{font-size:25px}.release-actions{padding:12px 20px}.release-actions .btn{padding:8px 12px}}
+
 </style>
 </head>
 <body>
@@ -565,6 +594,7 @@ textarea#story:disabled{opacity:.55}
     <button class="iconbtn" id="soundBtn" type="button" aria-pressed="true">声音 开</button>
   </header>
 
+  <ol class="dream-path" aria-label="梦境旅程"><li data-phase="story"><i>1</i>讲故事 · 收玩具</li><li data-phase="arrange"><i>2</i>摆好防线</li><li data-phase="night"><i>3</i>守住梦境</li></ol>
   <div class="stage-wrap">
     <div class="stage" id="stage">
       <canvas id="cv" width="960" height="540" aria-label="小满的卧室"></canvas>
@@ -659,6 +689,7 @@ textarea#story:disabled{opacity:.55}
           <li><button type="button" data-go="how"><span class="t">怎么玩</span><i></i><span class="n">9</span></button></li>
           <li><button type="button" data-go="shelf"><span class="t">书架<small id="shelfN"></small></span><i></i><span class="n">15</span></button></li>
           <li><button type="button" data-go="settings"><span class="t">设置</span><i></i><span class="n">21</span></button></li>
+          <li><button type="button" data-go="updates"><span class="t">更新记录</span><i></i><span class="n" id="menuVersion"></span></button></li>
           <li><button type="button" data-go="about"><span class="t">关于这个 demo</span><i></i><span class="n">23</span></button></li>
         </ol>
         <div class="mfoot" id="mfoot"></div>
@@ -667,6 +698,8 @@ textarea#story:disabled{opacity:.55}
     </article>
   </div>
 </div>
+<audio id="welcomeAudio" src="assets/audio/welcome-v0.6.mp3" preload="auto"></audio>
+<dialog id="releaseDialog" class="release-dialog" aria-labelledby="releaseTitle"></dialog>
 <section id="readerOv" class="reader" aria-label="故事阅读" hidden></section>
 <div id="coach" hidden>
   <div class="cdim" id="cDim"><i></i><i></i><i></i><i></i></div>
@@ -1148,7 +1181,7 @@ const AU = {
     const t = this.c.currentTime, level = v => v === 0 ? 0 : Math.pow(10, (v - 100) * .3 / 20);
     this.master.gain.setTargetAtTime(this.on && !document.hidden ? .7 : 0, t, .06);
     this.sfx.gain.setTargetAtTime(level(SET.effects), t, .08);
-    this.music.gain.setTargetAtTime(level(SET.music), t, .15);
+    this.music.gain.setTargetAtTime(level(SET.music) * (this.welcomePlaying ? .22 : 1), t, .15);
   },
   note(midi, time, duration, volume, type = 'sine', bus = this.score) {
     const f = 440 * Math.pow(2, (midi - 69) / 12);
@@ -1252,6 +1285,7 @@ function caption(text, ms = 3200) {
   clearTimeout(capTimer); if (ms) capTimer = setTimeout(() => el.classList.add('fade'), ms);
 }
 function hud() {
+  document.querySelectorAll('.dream-path li').forEach(el=>{if(el.dataset.phase===(S.phase==='title'?'story':S.phase))el.setAttribute('aria-current','step');else el.removeAttribute('aria-current');});
   $('#sleepBar').style.width = clamp(S.sleep, 0, 100) + '%';
   $('#sleepBarWrap').setAttribute('aria-valuenow', Math.round(S.sleep));
   $('#turns').textContent = `第 ${S.turn} 段 / ${S.maxTurn}`;
@@ -1551,7 +1585,7 @@ function enterArrange() {
   S.toys.forEach(t => { t.onShelf = false; if (t.floor === undefined) t.floor = null; if (t.floor !== null && !canPlace(t.id, t.floor)) t.floor = null; });
   $('#deskStory').hidden = true; $('#deskArrange').hidden = false; $('#deskNight').hidden = true;
   if (!S.toys.length) $('#arrHint').textContent = '没有收到玩具。今晚只有小夜灯陪着小满，影子靠近床边会走慢一点。';
-  renderTray(); renderInfo(null); renderWavePreview();
+  renderTray(); renderInfo(null); renderWavePreview(); hud();
   preloadBook();
   if (S.toys.length) setTimeout(() => guide('wave'), 700);
 }
@@ -1690,7 +1724,7 @@ function startNight() {
   S.phase = 'night'; S.sel = null; S.hoverSlot = null;
   ['wave', 'tray', 'go'].forEach(guideDone);
   $('#deskArrange').hidden = true; $('#deskNight').hidden = false;
-  renderSpec(); renderHearts(); updateWaveLbl();
+  renderSpec(); renderHearts(); updateWaveLbl(); hud();
   caption(WAVE_MSG[0], 2800);
 }
 function updateWaveLbl() { const N = S.night; $('#waveLbl').textContent = `第 ${N ? N.wave + 1 : 1} 波 / 4`; }
@@ -3167,7 +3201,35 @@ function applySet(key, v) {
   if (key === 'music' || key === 'effects') AU.mix();
   if (key === 'guide') { GUIDE.on = v; if (!v) hideCoach(); }
 }
-function syncSound() { AU.on = SET.sound; AU.mix(); const readerSound = $('#readSound'); if(readerSound){readerSound.textContent=AU.on?'声音 开':'声音 关';readerSound.setAttribute('aria-pressed',AU.on);} $('#soundBtn').textContent = AU.on ? '声音 开' : '声音 关'; $('#soundBtn').setAttribute('aria-pressed', AU.on); }
+const RELEASES = [
+ {version:'0.6',title:'梦境更顺手，小伙伴来迎接你',items:[['梦境布局调整','电脑上边看画面边操作，手机上玩具栏和按钮更紧凑。'],['小伙伴的欢迎','进入时听一句合成男童欢迎；关闭声音后保持安静。'],['每次见面的更新栏','每次打开都能看到本次变化，也可以在目录里重看更新记录。']]},
+ {version:'0.5',title:'梦境入口亮起来',text:'加入缓慢流转的光环、像素玩具和推荐体验提示。'},
+ {version:'0.4',title:'翻开完整双页绘本',text:'调整左右构图、暖色背景、六页进度和手机排版。'},
+ {version:'0.3',title:'故事里的动作与音乐',text:'打磨递地图、推船和呼唤回应，加入分场景音乐与音量调节。'},
+ {version:'0.2',title:'白天共创与睡前轻读',text:'加入小灯找家的六页故事、分支选择和轻轻参与的睡前阅读。'},
+ {version:'0.1',title:'第一次讲故事',text:'讲故事、收集玩具、布置防线、守住梦境，留下自己的绘本。'}
+];
+const VERSION=RELEASES[0].version;
+const WELCOME={
+ audio:$('#welcomeAudio'),played:false,source:null,
+ play(){
+  if(this.played||!SET.sound)return;
+  this.played=true;AU.init();
+  if(!this.source){this.source=AU.c.createMediaElementSource(this.audio);const gain=AU.c.createGain();gain.gain.value=.8;this.source.connect(gain).connect(AU.master);}
+  this.audio.play();
+ }
+};
+WELCOME.audio.onplay=()=>{AU.welcomePlaying=true;AU.mix();};
+WELCOME.audio.onended=WELCOME.audio.onpause=()=>{AU.welcomePlaying=false;AU.mix();};
+function showRelease(){
+ const current=RELEASES[0],dialog=$('#releaseDialog');
+ dialog.innerHTML=`<header class="release-head"><p class="release-eyebrow">再讲一个 · 更新小报</p><h2 id="releaseTitle">这次更新了什么<span class="release-version">v${VERSION}</span></h2></header><div class="release-content"><p>${current.title}</p><ul class="release-items">${current.items.map(([title,body])=>`<li><b>${title}</b><p>${body}</p></li>`).join('')}</ul><details class="release-history"><summary>从 0.1 到 ${VERSION}，看看之前的变化</summary><ol reversed>${RELEASES.slice(1).map(r=>`<li><strong>v${r.version} · ${r.title}</strong><br>${r.text}</li>`).join('')}</ol></details></div><footer class="release-actions"><button class="btn ghost" id="releaseClose" type="button">回到目录</button><button class="btn" id="releaseStart" type="button" autofocus>开始体验</button></footer>`;
+ dialog.showModal();
+ $('#releaseClose').onclick=()=>{dialog.close();WELCOME.play();};
+ $('#releaseStart').onclick=()=>{dialog.close();WELCOME.play();scenePanel();};
+}
+$('#menuVersion').textContent='v'+VERSION;
+function syncSound() { if(!SET.sound)WELCOME.audio.pause(); AU.on = SET.sound; AU.mix(); const readerSound = $('#readSound'); if(readerSound){readerSound.textContent=AU.on?'声音 开':'声音 关';readerSound.setAttribute('aria-pressed',AU.on);} $('#soundBtn').textContent = AU.on ? '声音 开' : '声音 关'; $('#soundBtn').setAttribute('aria-pressed', AU.on); }
 async function newNight() {
   leaveReader();
   AU.init();
@@ -3182,11 +3244,11 @@ $('#menuOv').addEventListener('input', e => {
   const key=e.target.dataset.volume;if(!key)return;
   AU.init();applySet(key,Number(e.target.value));e.target.nextElementSibling.value=e.target.value;
 });
-document.addEventListener('visibilitychange',()=>{AU.mix();if(AU.c){if(document.hidden)AU.c.suspend();else{AU.c.resume();AU.nextNote=AU.c.currentTime+.15;}}});
+document.addEventListener('visibilitychange',()=>{AU.mix();if(AU.c){if(document.hidden){WELCOME.audio.pause();AU.c.suspend();}else{AU.c.resume();AU.nextNote=AU.c.currentTime+.15;}}});
 $('#menuOv').addEventListener('click', e => {
   const scene = e.target.closest('[data-scene]');
   if (scene && !scene.disabled) {
-    AU.init();
+    AU.init();WELCOME.play();
     if (scene.dataset.scene === 'adventure') newNight();
     else if (scene.dataset.scene === 'bedtime') bedtimePanel();
     else startNarrative('day');
@@ -3203,7 +3265,8 @@ $('#menuOv').addEventListener('click', e => {
   const go = e.target.closest('[data-go]'); if (!go) return;
   AU.init();
   const g = go.dataset.go;
-  if (g === 'start') scenePanel();
+  if (g === 'updates') showRelease();
+  else if (g === 'start') {WELCOME.play();scenePanel();}
   else if (g === 'resume') closeMenu();
   else { AU.page(); showPanel(g); }
 });
@@ -3718,6 +3781,7 @@ cv.addEventListener('mousemove', e => {
 cv.addEventListener('mouseleave', () => { if (!drag) S.hoverSlot = null; });
 addEventListener('resize', () => layoutBook());
 document.addEventListener('keydown', e => {
+  if($('#releaseDialog').open)return;
   if (e.key === 'Tab') {
     const root = MENU.open ? $('#menuOv') : !$('#cardOv').hidden ? $('#cardOv') : BOOK ? $('#bookOv') : READER ? $('#readerOv') : null;
     if (root) {
@@ -3736,6 +3800,7 @@ document.addEventListener('keydown', e => {
 });
 
 renderSlots(); hud(); syncSound(); renderToc(); showPanel(null, true);
+showRelease();
 requestAnimationFrame(frame);
 })();
 </script>
