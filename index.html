@@ -417,6 +417,22 @@ textarea#story:disabled{opacity:.55}
 .scene-option small{display:block;font-size:13px;line-height:1.7;color:#725d46}
 .scene-option:hover,.scene-option:focus-visible{background:#ffefc8;outline:2px solid #aa7543;outline-offset:2px}
 .scene-option:disabled{opacity:.5;cursor:wait}
+.scene-dream{position:relative;isolation:isolate;overflow:hidden;border:0;border-radius:5px;padding:17px 18px 14px;background:#292747;color:#fff0c7;box-shadow:0 0 0 1px #a49ac1,0 5px 18px #6a589d33;transition:box-shadow .2s,transform .2s}
+.scene-dream::before{content:"";position:absolute;left:50%;top:50%;width:220%;aspect-ratio:1;background:conic-gradient(from 0deg,#635983 0deg,#c6a5ff 55deg,#fff0b8 80deg,#635983 120deg,#635983 190deg,#91ddcb 235deg,#e8e0ff 260deg,#635983 300deg);animation:dream-orbit 8s linear infinite;z-index:-2;pointer-events:none}
+.scene-dream::after{content:"";position:absolute;inset:3px;background:radial-gradient(ellipse at 90% 0,#73619455,transparent 65%),linear-gradient(120deg,#292a49,#34314f);z-index:-1;pointer-events:none}
+.scene-dream .dream-eyebrow{display:flex;align-items:center;gap:7px;color:#d0c2ef;font-size:10px;letter-spacing:.12em;margin-bottom:7px}
+.dream-eyebrow::before{content:"";width:5px;height:5px;background:#e8d19b;box-shadow:0 0 9px #ffe4aa88}
+.scene-dream b{color:#fff0c7;font-size:21px;letter-spacing:.04em;margin-bottom:5px}
+.scene-dream small{color:#d5cfe5;font-size:12px;line-height:1.75;max-width:95%}
+.dream-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:9px}
+.dream-toys{display:flex;gap:8px;align-items:center;height:30px}.dream-toys canvas{width:28px;height:28px;image-rendering:pixelated;filter:drop-shadow(0 2px #171729)}
+.dream-enter{font:12px var(--f-display);color:#ffe8b1;letter-spacing:.08em;border-bottom:1px solid #9e8c68;padding-bottom:3px}
+.scene-dream:hover,.scene-dream:focus-visible{background:#292747;outline:2px solid #b5a1d9;outline-offset:4px;box-shadow:0 0 0 1px #bcaad8,0 5px 24px #8d6cb955;transform:translateY(-1px)}
+.scene-dream:active{transform:translateY(1px)}
+.scene-dream:disabled::before{animation-play-state:paused}
+@keyframes dream-orbit{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.scene-dream{transition:none}.scene-dream::before{animation:none;transform:translate(-50%,-50%) rotate(30deg)}}
+
 .reader{position:fixed;inset:0;z-index:51;overflow:auto;background:#ede3ce;color:#3a2c21;padding:clamp(16px,4vw,48px);background-image:radial-gradient(ellipse at 25% 10%,#fff8e8,transparent 65%)}
 .read-shell{max-width:1100px;margin:auto}
 .read-head{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:28px}
@@ -2876,7 +2892,8 @@ function scenePanel() {
   box.innerHTML = `<button class="mback" data-go="toc" type="button">‹ 回到目录</button><h3>此刻怎么讲</h3><div class="mrule"></div><div class="scene-options">
     <button class="scene-option" data-scene="day" type="button"><b>☀ 白天 · 一起编</b><small>拿起拖鞋船，帮小灯过河。把想出来的办法放进像素世界。</small></button>
     <button class="scene-option" data-scene="bedtime" type="button"><b>☾ 睡前 · 轻轻读</b><small>轻轻开窗、推船、盖被子。动作可以跳过，故事由大人接着讲。</small></button>
-    <button class="scene-option" data-scene="adventure" type="button"><b>✦ 梦境 · 玩具冒险</b><small>原版自由讲述、收玩具和塔防，适合专门的游戏时间。</small></button></div>`;
+    <button class="scene-option scene-dream" data-scene="adventure" type="button"><span class="dream-eyebrow">推荐体验 · 想玩游戏，从这里开始</span><b>✦ 梦境 · 玩具冒险</b><small>把故事里的玩具收进队伍，布置防线，守住小满的梦。</small><span class="dream-bottom"><span class="dream-toys" aria-hidden="true"></span><span class="dream-enter">进入梦境 ›</span></span></button></div>`;
+  ['trex','rocket','wand'].forEach(id=>box.querySelector('.dream-toys').appendChild(cloneCanvas(SP[id])));
   box.querySelectorAll('[data-scene]').forEach(b => b.disabled = S.busy || S.modal);
   if (S.busy || S.modal) box.insertAdjacentHTML('beforeend','<p class="mnote">等这一句讲完、收好玩具，再开始新的故事。</p>');
   box.querySelector('.mback').focus();
