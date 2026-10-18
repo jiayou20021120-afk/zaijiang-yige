@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600;700&family=Long+Cang&display=swap">
 <style>
 :root{
-  /* layout: one column. the pixel bedroom on top, the picture-book page the parent holds underneath */
+  /* The adventure room and narrative reader share the same palette. */
   --night:#15162f;
   --night-2:#1f2147;
   --night-line:#363a74;
@@ -469,6 +469,32 @@ textarea#story:disabled{opacity:.55}
 @media(max-width:720px){.reader{padding:12px 10px 22px}.read-head{margin-bottom:12px}.read-desk{padding:15px 14px 14px 27px;margin-top:12px}.read-desk .read-text{font-size:15px;line-height:1.85}.read-tool{min-width:150px;font-size:13px;padding:7px 8px;gap:6px}.read-tool canvas{width:30px;height:30px}.read-desk h1{font-size:22px}.read-nav{gap:8px;flex-wrap:wrap}.read-nav small{font-size:11px;min-width:150px}.pixel-stage .scene-name{font-size:10px;top:8px;left:8px}.pixel-stage .scene-whisper{bottom:6px;font-size:12px;padding:3px 9px;border-radius:8px}.read-tools{gap:8px}}
 
 
+/* Keep the scene visible while the parent reads and the child chooses. */
+.read-shell{max-width:1320px;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(330px,1fr);gap:18px 24px;align-items:start}
+.read-head{grid-column:1/-1;margin:0;min-height:42px}.read-head-actions{display:flex;gap:8px}
+.pixel-stage{position:sticky;top:14px;border-radius:4px;align-self:start}
+.pixel-stage .scene-name{font-size:11px;left:10px;top:10px;letter-spacing:.05em}
+.pixel-stage .scene-whisper{bottom:8px;font-size:13px;line-height:1.6;padding:4px 9px;border-radius:4px;white-space:normal;width:max-content;max-width:92%}
+.read-desk{margin:0;padding:20px 20px 16px 30px;border-radius:4px;min-width:0}
+.read-desk .read-text{white-space:pre-line;font-size:16px;line-height:1.85}
+.read-desk h1{font-size:25px;line-height:1.4}.read-tools{display:grid;grid-template-columns:1fr}
+.read-tool{min-width:0;width:100%;border-radius:4px;font-size:14px;line-height:1.6}
+.read-consequence{border-left:3px solid #a17c3b;border-radius:2px}.read-nav{flex-wrap:wrap;gap:10px}
+.read-nav small{flex-basis:100%}.read-nav .btn{margin-left:auto;min-height:42px}
+.read-quiet .read-consequence{border-color:#8c9676}
+.pixel-stage .scene-whisper{top:38px;bottom:auto;left:auto;right:8px;transform:none;max-width:70%;background:#15162fbf}
+.volume-control{display:flex;align-items:center;gap:10px;width:58%}.volume-control input{width:100%;accent-color:#9a6529}.volume-control output{font-size:12px;min-width:3ch}
+@media(max-width:850px){
+ .reader{padding:10px 10px 18px}.read-shell{display:block;max-width:650px}.read-head{margin-bottom:10px}.read-brand{font-size:22px}.read-mode{font-size:10px}
+ .pixel-stage{top:0;z-index:2;width:min(100%,calc(31svh * 16 / 9));margin:0 auto 12px;box-shadow:0 6px 14px #0007}
+ .read-desk{padding:14px 14px 0 25px}.read-desk h1{font-size:22px}.read-desk .read-text{font-size:15px;line-height:1.8}
+ .read-desk .read-kicker{display:none}.read-tools{gap:7px;margin-top:10px}.read-tool{min-height:48px;padding:6px 9px}.read-tool canvas{width:30px;height:30px}
+ .read-nav{position:sticky;bottom:0;z-index:3;background:#f4e9cf;margin:10px -14px 0 -25px;padding:9px 14px 10px 25px;border-top:1px solid #c5ac82}
+ .read-nav small{font-size:11px;flex:1;min-width:130px}.read-quiet .read-nav{background:#252b3f;border-color:#565b6d}
+ .pixel-stage .scene-name{font-size:10px;top:6px;left:6px;padding:3px 6px}.pixel-stage .scene-whisper{font-size:10px;top:29px;bottom:auto;padding:3px 6px}
+}
+
+
 .toybook-btn{color:var(--paper-ink);border-color:#b9a47c;font-size:12px}
 .toybook{width:min(980px,94vw);max-height:85vh;overflow:auto;border:3px solid #b89962;border-radius:14px;padding:22px;background:#f4e9cf;color:#3a2c21;box-shadow:0 20px 60px #0008}
 .toybook header{display:flex;justify-content:space-between;align-items:center;gap:18px}.toybook h3{font:26px var(--f-display);margin:4px 0}.toybook header small{color:#8a6b45}.toybook-note{font-size:14px;line-height:1.7}
@@ -625,7 +651,7 @@ const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 /* settings and the bookshelf live only in this browser; everything works without storage */
 const stored = (k, d) => { try { const v = localStorage.getItem('zjyg.' + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } };
 const store = (k, v) => { try { localStorage.setItem('zjyg.' + k, JSON.stringify(v)); } catch (e) { /* blocked storage */ } };
-const SET = { sound: stored('sound', true), speed: stored('speed', 'normal'), guide: stored('guide', !stored('guideDone', false)) };
+const SET = { sound: stored('sound', true), music: stored('music', 55), effects: stored('effects', 75), speed: stored('speed', 'normal'), guide: stored('guide', !stored('guideDone', false)) };
 const TYPE_MS = { slow: 54, normal: 36, fast: 14 };
 const CN = '零一二三四五六七八九十';
 const cn = n => n <= 10 ? CN[n] : n < 20 ? '十' + (n % 10 ? CN[n % 10] : '') : CN[Math.floor(n / 10) % 10] + '十' + (n % 10 ? CN[n % 10] : '');
@@ -1051,10 +1077,88 @@ function dominantTheme() {
 const AU = {
   c: null, on: true, nb: null,
   init() {
-    if (this.c) return;
+    if (this.c) { if (this.c.state === 'suspended') this.c.resume(); return; }
     try { this.c = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { this.c = null; return; }
+    this.master = this.c.createGain(); this.master.gain.value = this.on ? .7 : 0; this.master.connect(this.c.destination);
+    this.sfx = this.c.createGain(); this.sfx.gain.value = 0; this.sfx.connect(this.master);
+    this.music = this.c.createGain(); this.music.gain.value = 0; this.music.connect(this.master);
+    this.score = this.c.createGain(); this.score.connect(this.music);
+    this.ambience = this.c.createGain(); this.ambience.connect(this.music);
+    this.ambience.gain.value = 0;
+    this.mix(); this.nextNote = this.c.currentTime + .12; this.beat = 0; this.scene = '';
     const len = this.c.sampleRate; this.nb = this.c.createBuffer(1, len, this.c.sampleRate);
     const d = this.nb.getChannelData(0); for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+    const air = this.c.createBuffer(1, len * 6, this.c.sampleRate), data = air.getChannelData(0);
+    let brown = 0;
+    for (let i = 0; i < data.length; i++) { brown = (brown + Math.random() * .04 - .02) / 1.02; data[i] = brown * 3; }
+    const wind = this.c.createBufferSource(); wind.buffer = air; wind.loop = true;
+    this.airFilter = this.c.createBiquadFilter(); this.airFilter.type = 'lowpass'; this.airFilter.frequency.value = 600;
+    wind.connect(this.airFilter).connect(this.ambience); wind.start();
+  },
+  mix() {
+    if (!this.c) return;
+    const t = this.c.currentTime, level = v => v === 0 ? 0 : Math.pow(10, (v - 100) * .3 / 20);
+    this.master.gain.setTargetAtTime(this.on && !document.hidden ? .7 : 0, t, .06);
+    this.sfx.gain.setTargetAtTime(level(SET.effects), t, .08);
+    this.music.gain.setTargetAtTime(level(SET.music), t, .15);
+  },
+  note(midi, time, duration, volume, type = 'sine', bus = this.score) {
+    const f = 440 * Math.pow(2, (midi - 69) / 12);
+    for (const [ratio, weight] of [[1, 1], [2, .15], [3, .035]]) {
+      const o = this.c.createOscillator(), g = this.c.createGain(); o.type = type; o.frequency.value = f * ratio;
+      g.gain.setValueAtTime(0, time); g.gain.linearRampToValueAtTime(volume * weight, time + .025);
+      g.gain.exponentialRampToValueAtTime(.0001, time + duration);
+      o.connect(g).connect(bus); o.start(time); o.stop(time + duration + .03);
+    }
+  },
+  tick() {
+    if (!this.c || this.c.state !== 'running' || document.hidden) return;
+    const reading = READER && !MENU.open && !$('#readerOv').hidden;
+    const quiet = reading && READER.mode === 'bedtime';
+    const battle = S.phase === 'night' && !MENU.open;
+    const scene = quiet ? 'bedtime' : reading ? 'day' : battle ? 'dream' : 'home';
+    const t = this.c.currentTime;
+    if (scene !== this.scene) { this.scene = scene; this.beat = 0; this.nextNote = t + .15; }
+    const river = reading && READER.i > 0 && READER.i < 3;
+    const reeds = reading && READER.i > 2 && READER.i < 5;
+    const ending = quiet && READER.canvas === null;
+    const airLevel = ending ? 0 : river ? .09 : reeds ? .045 : .012;
+    if (airLevel !== this.airLevel) {
+      this.airLevel = airLevel;
+      this.ambience.gain.setTargetAtTime(airLevel, t, 1.2);
+      this.airFilter.frequency.setTargetAtTime(river ? 1400 : reeds ? 850 : 320, t, .8);
+    }
+    if (!this.on || SET.music === 0 || ending || t < this.cueUntil) { this.nextNote = t + .2; return; }
+    if (this.nextNote < t) this.nextNote = t + .03;
+    const step = quiet ? .76 : battle ? .29 : scene === 'day' ? .43 : .64;
+    const melody = [72,null,76,79,null,76,74,null,72,null,69,67,null,null,69,null,72,null,74,76,null,74,72,null,69,null,67,64,null,null,null,null];
+    while (this.nextNote < t + .2) {
+      const b = this.beat % melody.length, at = this.nextNote, v = quiet ? .065 : .11;
+      if (melody[b] !== null) this.note(melody[b], at, quiet ? 2.2 : 1.3, v, scene === 'day' ? 'triangle' : 'sine');
+      if (b % 8 === 0) { const bass = [48,53,57,55][b / 8]; this.note(bass, at, step * 7, v * .6); this.note(bass + 7, at + step, step * 5, v * .26); }
+      if (scene === 'day' && b % 4 === 2) this.note(60 + [0,5,9,7][Math.floor(b / 8)], at, .32, .012, 'triangle');
+      if (battle && b % 2 === 0) this.note(b % 4 === 0 ? 36 : 48, at, .12, .035 + S.night.wave * .005, 'triangle');
+      this.nextNote += step; this.beat++;
+    }
+  },
+  cancelCue() {
+    this.cueUntil = 0;
+    if (!this.c) return;
+    if (this.cue) { this.cue.gain.setTargetAtTime(0, this.c.currentTime, .04); this.cue = null; }
+    this.score.gain.cancelScheduledValues(this.c.currentTime);
+    this.score.gain.setTargetAtTime(1, this.c.currentTime, .2);
+  },
+  readerCue(kind, quiet) {
+    if (!this.ok()) return;
+    this.cancelCue();
+    const t = this.c.currentTime, v = quiet ? .018 : .035;
+    this.cue = this.c.createGain(); this.cue.connect(this.sfx);
+    this.score.gain.setTargetAtTime(.3, t, .08); this.score.gain.setTargetAtTime(1, t + 3.5, .25);
+    this.cueUntil = t + 4.1;
+    const notes = kind === 'song' ? [[0,72],[.32,76],[.64,79],[1.85,79],[2.17,76],[2.49,72]]
+      : kind === 'light' ? [[.35,76],[.85,79],[1.8,76],[2.3,79],[3.15,84]]
+      : kind === 'map' ? [[.3,72],[.85,76],[1.45,79]] : [[.2,48],[.85,55],[1.45,60],[2.3,67]];
+    for (const [delay, n] of notes) this.note(n, t + delay, .65, v, 'sine', this.cue);
   },
   ok() { return this.on && this.c; },
   tone(f, dur, type = 'sine', vol = .05, delay = 0) {
@@ -1062,7 +1166,7 @@ const AU = {
     const c = this.c, t = c.currentTime + delay, o = c.createOscillator(), g = c.createGain();
     o.type = type; o.frequency.value = f;
     g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .012); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
-    o.connect(g).connect(c.destination); o.start(t); o.stop(t + dur + .05);
+    o.connect(g).connect(this.sfx); o.start(t); o.stop(t + dur + .05);
   },
   noise(dur, vol = .05, freq = 800, q = 1, sweep = 0) {
     if (!this.ok()) return;
@@ -1070,7 +1174,7 @@ const AU = {
     s.buffer = this.nb; f.type = 'bandpass'; f.frequency.setValueAtTime(freq, t); f.Q.value = q;
     if (sweep) f.frequency.exponentialRampToValueAtTime(sweep, t + dur);
     g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
-    s.connect(f).connect(g).connect(c.destination); s.start(t); s.stop(t + dur);
+    s.connect(f).connect(g).connect(this.sfx); s.start(t); s.stop(t + dur);
   },
   chime() { [784, 988, 1175, 1568].forEach((f, i) => this.tone(f, .55, 'triangle', .045, i * .08)); },
   sparkle() { this.tone(1568, .2, 'sine', .025); this.tone(2093, .25, 'sine', .02, .06); },
@@ -1081,7 +1185,7 @@ const AU = {
     o.type = 'sawtooth'; o.frequency.setValueAtTime(70, t); o.frequency.linearRampToValueAtTime(115, t + .35); o.frequency.linearRampToValueAtTime(58, t + .85);
     f.type = 'lowpass'; f.frequency.value = 520;
     g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.05, t + .06); g.gain.linearRampToValueAtTime(.0001, t + .95);
-    o.connect(f).connect(g).connect(c.destination); o.start(t); o.stop(t + 1);
+    o.connect(f).connect(g).connect(this.sfx); o.start(t); o.stop(t + 1);
   },
   hit() { this.noise(.14, .08, 320, 1); this.tone(110, .22, 'square', .03); },
   pop() { this.tone(300 + Math.random() * 80, .07, 'triangle', .03); },
@@ -2688,6 +2792,7 @@ function drawMenuBg(t, dt) {
 const SPINE_C = ['#2d3a7c', '#7a3b4a', '#2f5d50', '#8a5a2b', '#4b3a78', '#355f7d'];
 const ICON_PEN = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.2-4.6L15.8 4.8a2 2 0 0 1 2.8 0l.6.6a2 2 0 0 1 0 2.8L8.6 18.8z M14 6.6l3.4 3.4" fill="none" stroke="#3a2c21" stroke-width="1.8" stroke-linejoin="round"/></svg>';
 function openMenu(panel = null) {
+  AU.cancelCue();
   MENU.open = true; $('#menuOv').hidden = false; $('#fan').hidden = true;
   if (CLOUD.ok) CLOUD.reopen(S.phase === 'dawn');
   coach.hidden = true; cancelAnimationFrame(GUIDE.raf);
@@ -2745,6 +2850,7 @@ function scenePanel() {
   box.querySelector('.mback').focus();
 }
 function leaveReader() {
+  AU.cancelCue();
   READER = null; $('#readerOv').hidden = true; document.body.classList.remove('quiet-reading');
 }
 function startNarrative(mode, src = null) {
@@ -2782,12 +2888,24 @@ function pixelBedroom(g,t,progress,quiet,windowOpen=0){
  if(progress>.3)pxr(g,245,111-progress*8,61,14+progress*8,'#e0a33c');for(let i=0;i<5;i++)pxr(g,202+i*21,126,4,4,'#c98d36');
  pxspr(g,MOM,180,87,1.5);pxr(g,177,132,26,5,'#715239');pxr(g,182,137,3,17,'#5c4032');pxr(g,197,137,3,17,'#5c4032');
  pxr(g,305,54,3,23,'#8a6b4a');pxr(g,301,70,12,16,'#ffe0a0');pxr(g,298,77,18,3,'#b59a62');softLight(g,307,77,44,.28);
- if(progress<.4)pixFirefly(g,151+progress*56,83-progress*15,t,1,true);
+ if(progress<.4&&quiet)pixFirefly(g,151+progress*56,83-progress*15,t,1,true);
  if(quiet){g.fillStyle='rgba(9,14,30,.18)';g.fillRect(0,0,320,180);}
 }
+function smoothStep(x){x=clamp(x,0,1);return x*x*(3-2*x);}
+function signalPulse(p,start){return Math.max(0,1-Math.abs(p-start)/.06);}
 function pixelWorld(g,i,n,quiet,t=0,progress=0,selected=null){
  const kind=i===0||i===5?'room':i<3?'river':i===3?'meadow':'reeds';
- if(kind==='room'){pixelBedroom(g,t,i===5?progress:0,quiet,i===0&&quiet?progress:0);if(i===0&&!quiet){pxspr(g,LEAF,210+progress*19,131-progress*21,2);if(progress>0)pixFirefly(g,232,113,t,1,quiet);}else if(!quiet){pixFirefly(g,236,107,t,1,false,progress>.3);pixFirefly(g,264,96,t,1,false,progress>.3);}return;}
+ if(kind==='room'){
+  pixelBedroom(g,t,i===5&&quiet?progress:0,quiet,i===0&&quiet?progress:0);
+  if(i===0&&!quiet){
+   const reach=smoothStep(progress/.45),pass=smoothStep((progress-.2)/.6);
+   const fx=151+reach*81,fy=83+reach*25;
+   pixFirefly(g,fx,fy,t,1.4,false,progress>.72);
+   pxspr(g,LEAF,210+pass*19,131-pass*18-Math.sin(pass*Math.PI)*12,2);
+   if(progress>.72){const glow=Math.sin((progress-.72)/.28*Math.PI);for(let j=0;j<5;j++){const a=j*Math.PI*2/5;pxr(g,237+Math.cos(a)*(8+glow*5),111+Math.sin(a)*(8+glow*5),1,1,'#fff1ae');}}
+  }else if(!quiet){pixFirefly(g,236,107,t,1.4,false,true);pixFirefly(g,264,96,t,1.4,false,true);}
+  return;
+ }
  const sky=quiet?'#1d354c':'#79a99d';pxr(g,0,0,320,180,sky);pxr(g,0,73,320,44,quiet?'#2b514b':'#5c856b');
  pixCloud(g,12+(quiet?0:Math.sin(t*.05)*2),32,1.5,quiet?'#395568':'#c1cfb3');pixCloud(g,196,21,2,quiet?'#34495c':'#bed0b7');pxspr(g,SP.moon,269,21,2);
  for(let j=0;j<10;j++)pixTree(g,j*43-27,43+(j%3)*6,.55,quiet?'#345a53':'#4c7c63',true);
@@ -2798,16 +2916,20 @@ function pixelWorld(g,i,n,quiet,t=0,progress=0,selected=null){
   pxr(g,75,116,178,64,quiet?'#24495b':'#3a7081');pxr(g,78,114,172,3,quiet?'#456955':'#8dac84');
   for(let j=0;j<35;j++){const x=80+(j*41)%166+Math.round(Math.sin(t*amt*.7+j)*2),y=122+(j*17)%56;pxr(g,x,y,8+(j%3)*3,1,j%3?'#4d8390':'#7faba4');}
   pixReed(g,54,162,t,quiet);pixReed(g,250,151,t,quiet);
-  const ride=n.route||selected||'boat', k=progress*progress*(3-2*progress),x=i===1?119+k*102:i===2?152+k*73:145;
+  const ride=n.route||selected||'boat', k=smoothStep(progress),push=smoothStep((progress-.25)/.65),x=i===1?119+k*102:i===2?152+push*73:145;
   if(ride==='whale'||(i===2&&n.route==='whale')){pxspr(g,SP.whale,x-15,136+Math.sin(t*.6*amt),2.5);pxspr(g,KID.awake,x-5,124,1.25);pixFirefly(g,x+26,134,t,1,quiet);}
-  else{pxspr(g,SP.boat,x-12,129+Math.sin(t*.8*amt)*1.2,2.2);pxspr(g,KID.awake,x-10,128,1.2);pixFirefly(g,x+17,138,t,1,quiet);}
+  else{const bob=Math.sin(t*.8*amt)*1.2-(i===2?Math.sin(push*Math.PI)*2:0);pxspr(g,SP.boat,x-12,129+bob,2.2);pxspr(g,KID.awake,x-10,128+bob,1.2);pixFirefly(g,x+17,138+bob,t,1.25,quiet);}
   if(i===1&&progress===0&&ride!=='whale')pxspr(g,SP.whale,204,143,2.5);
-  if(i===2&&(n.route==='boat'||quiet&&!n.route)){pxspr(g,SP.whale,117+k*56,149,2.3);if(progress>.2){for(let j=0;j<3;j++)pxr(g,x-26-j*7,160,3,1,'#bad0ae');}}
+  if(i===2&&(n.route==='boat'||quiet&&!n.route)){
+   const approach=smoothStep(progress/.25),wx=x-56+approach*15,wy=149-approach*10+Math.sin(approach*Math.PI)*3;
+   pxspr(g,SP.whale,wx,wy,2.3,true);
+   if(progress>.25){for(let j=0;j<5;j++){const drift=(t*9+j*7)%26;pxr(g,x-26-drift,163+j%2*3,7-drift/6,1,quiet?'#648c96':'#bad9cd');}for(let j=0;j<3;j++)pxr(g,x-5+j*5,153-Math.sin(push*Math.PI)*7-j%2*3,2,2,'#c0e0da');}
+  }
   if(i===2&&n.route==='whale'&&progress>.1)pxspr(g,LEAF,x+4,128,1.3);
   pxspr(g,LEAF,49,141,2);
  }else{
   pxr(g,83,145,173,27,quiet?'#817660':'#c4b888');pxr(g,80,147,180,1,'#ddcca1');for(let j=0;j<18;j++)pxr(g,87+j*9,155+(j%3)*4,2,1,'#9d946e');
-  const k=progress*progress*(3-2*progress);pxspr(g,KID.awake,112+k*52,108,1.8);pixFirefly(g,150+k*66,119,t,1,quiet);
+  const k=progress*progress*(3-2*progress);pxspr(g,KID.awake,112+k*52,108,1.8);if(kind==='meadow')pixFirefly(g,150+k*66,119,t,1.3,quiet);
   if(kind==='meadow'){
    const friend=n.friend||selected||'cat';pxspr(g,friend==='trex'?SP.trex:SP.cat,190+k*28,120-Math.sin(t*amt)*.6,2);if(!selected&&!n.friend)pxspr(g,SP.trex,240,90,2.4);
    for(let j=0;j<6;j++){const x=185+j*10;pxr(g,x,142,1,8,'#427c54');pxr(g,x-3,141,6,2,'#93b891');}
@@ -2815,8 +2937,15 @@ function pixelWorld(g,i,n,quiet,t=0,progress=0,selected=null){
    pixReed(g,263,144,t,quiet);
   }else{
    for(const x of [192,214,244,271])pixReed(g,x,158,t,quiet);
-   pixFirefly(g,248,105,t,1,quiet,progress>.45);if(progress>.05)pixFirefly(g,175,120,t,1,quiet,Math.sin(progress*12)>0);
-   if((n.signal||selected)==='song'&&progress>.05){for(let j=0;j<3;j++){const x=187+j*12,y=116-(j*6+progress*15);pxr(g,x,y,1,7,'#e6d7a4');pxr(g,x-2,y+6,3,2,'#e6d7a4');}}
+   const answer=signalPulse(progress,.43)+signalPulse(progress,.55),call=signalPulse(progress,.09)+signalPulse(progress,.21);
+   const home=smoothStep((progress-.67)/.33),fx=153+home*82,fy=119-home*11;
+   softLight(g,fx+4,fy+4,17+call*14,.18+call*.28);softLight(g,252,109,17+answer*16,.16+answer*.3);
+   pixFirefly(g,fx,fy,t,1.4,quiet,call>.2||home>.8);pixFirefly(g,248,105,t,1.4,quiet,answer>.2||home>.8);
+   if(home>.85){pxr(g,242,98,1,1,'#fff1ae');pxr(g,258,96,1,1,'#fff1ae');}
+   if((n.signal||selected)==='song'&&progress>.05&&progress<.7){
+    const reply=progress>.4,ph=reply?(progress-.4)/.3:progress/.4;
+    for(let j=0;j<3;j++){const x=(reply?248:160)+(reply?-1:1)*(j*9+ph*15),y=109-j*5-ph*9;pxr(g,x,y,1,6,'#e6d7a4');pxr(g,x-2,y+5,3,2,'#e6d7a4');}
+   }
   }
  }
 }
@@ -2829,16 +2958,17 @@ function readerActions(p,R){
  return [{id:i===0||i===5?'leaf':n.route==='boat'?'whale':'leaf',label:i===0?labels[0]:i===5?labels[2]:labels[1],result:i===0?'小满把叶子递给小灯。小灯握好地图，指向了河的另一边。':i===5?'小灯收好地图，飞向妈妈。小满也回家了，把今天的办法讲给妈妈听。':p.child}];
 }
 function renderReader(){
+ AU.cancelCue();
  const R=READER,quiet=R.mode==='bedtime',ov=$('#readerOv');
  const p=R.source?{title:R.source.narrative.headings[R.i],text:R.source.log[R.i].mom,child:R.source.log[R.i].kid,toy:R.source.log[R.i].toy,topic:R.source.log[R.i].topic}:narrativePage(R.i,S.narrative,quiet);
  R.page=p;R.chosen=false;R.done=false;R.progress=0;R.animating=false;R.selected=null;R.actions=readerActions(p,R);R.age=0;R.message='';
  ov.className='reader'+(quiet?' read-quiet':'');
- ov.innerHTML=`<div class="read-shell"><header class="read-head"><div class="read-brand">再讲一个<span class="read-mode">${SCENES[R.mode][0]}</span></div><button class="btn ghost" id="readMenu" type="button">菜单</button></header><div class="pixel-stage"><canvas id="readCanvas" width="960" height="540" aria-label="${esc(p.title)}，可把手里的东西送到场景里" tabindex="0"></canvas><span class="scene-name">${esc(p.title)} · ${R.i+1} / 6</span><span class="scene-whisper" id="sceneWhisper">${quiet?'可以轻轻碰一下，也可以让大人接着讲。':'把想出来的办法，放进这个故事里。'}</span></div><article class="read-desk"><p class="read-kicker">${esc(S.narrative.title)}</p><h1>${esc(p.title)}</h1><p class="read-text">${esc(p.text)}</p>${p.question?`<p class="read-question">${esc(p.question)}</p>`:''}<div class="read-tools">${R.actions.map((a,j)=>`<button class="read-tool" type="button" data-choice="${j}" aria-pressed="false"><span>${esc(a.label)}</span></button>`).join('')}</div><div id="readResult" aria-live="polite"></div><nav class="read-nav"><small id="readHint">${quiet?'这里没有任务。想动手就轻轻碰一下，读完再接着讲。':'拿起一样东西，拖进画面；也可以先点按钮，再点画面。'}</small><button class="btn ghost" id="performBtn" type="button" hidden>放进故事</button><button class="btn" id="readNext" type="button" ${quiet?'':'hidden'}>${R.i===5?quiet?'轻轻合上':'把故事留下':'接着讲'}</button></nav></article></div>`;
+ ov.innerHTML=`<div class="read-shell"><header class="read-head"><div class="read-brand">再讲一个<span class="read-mode">${SCENES[R.mode][0]}</span></div><div class="read-head-actions"><button class="btn ghost" id="readSound" type="button" aria-pressed="${SET.sound}">${SET.sound?'声音 开':'声音 关'}</button><button class="btn ghost" id="readMenu" type="button">菜单</button></div></header><div class="pixel-stage"><canvas id="readCanvas" width="960" height="540" aria-label="${esc(p.title)}，可把手里的东西送到场景里" tabindex="0"></canvas><span class="scene-name">${esc(p.title)} · ${R.i+1} / 6</span><span class="scene-whisper" id="sceneWhisper">${quiet?'可以轻轻碰一下，也可以让大人接着讲。':'把想出来的办法，放进这个故事里。'}</span></div><article class="read-desk"><p class="read-kicker">${esc(S.narrative.title)}</p><h1>${esc(p.title)}</h1><p class="read-text">${esc(p.text)}</p>${p.question?`<p class="read-question">${esc(p.question)}</p>`:''}<div class="read-tools">${R.actions.map((a,j)=>`<button class="read-tool" type="button" data-choice="${j}" aria-pressed="false"><span>${esc(a.label)}</span></button>`).join('')}</div><div id="readResult" aria-live="polite"></div><nav class="read-nav"><small id="readHint">${quiet?'这里没有任务。想动手就轻轻碰一下，读完再接着讲。':'拿起一样东西，拖进画面；也可以先点按钮，再点画面。'}</small><button class="btn ghost" id="performBtn" type="button" hidden>放进故事</button><button class="btn" id="readNext" type="button" ${quiet?'':'hidden'}>${R.i===5?quiet?'轻轻合上':'把故事留下':'接着讲'}</button></nav></article></div>`;
  R.canvas=$('#readCanvas');R.g=R.canvas.getContext('2d');R.g.imageSmoothingEnabled=false;
  R.actions.forEach((a,j)=>{const b=ov.querySelector(`[data-choice="${j}"]`);b.prepend(cloneCanvas(PIXSPR[a.id]||SP[a.id]));b.onclick=()=>{selectReaderTool(j);if(quiet)performReaderAction();};b.onpointerdown=e=>beginReaderDrag(e,j);});
  R.canvas.onpointerup=e=>{if(R.selected!==null&&!R.done){const box=R.canvas.getBoundingClientRect();const x=(e.clientX-box.left)/box.width*320,y=(e.clientY-box.top)/box.height*180;const target=pixelTarget(R);if(Math.hypot(x-target[0],y-target[1])<58)performReaderAction();else{R.message=quiet?'慢慢来，放到小灯旁边。':'放到发光的小圈里，故事就会动起来。';$('#sceneWhisper').textContent=R.message;}}};
  R.canvas.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();if(R.selected===null)selectReaderTool(0);performReaderAction();}};
- $('#readMenu').onclick=()=>openMenu();$('#performBtn').onclick=performReaderAction;$('#readNext').onclick=advanceReader;
+ $('#readSound').onclick=()=>{AU.init();SET.sound=!SET.sound;store('sound',SET.sound);syncSound();};$('#readMenu').onclick=()=>openMenu();$('#performBtn').onclick=performReaderAction;$('#readNext').onclick=advanceReader;
  (quiet?$('#readNext'):ov.querySelector('[data-choice]')).focus({preventScroll:true});ov.scrollTop=0;
 }
 function selectReaderTool(j){
@@ -2861,16 +2991,19 @@ function performReaderAction(){
  R.choice=a.key?a:null;R.animating=true;R.progress=0;R.chosen=true;
  $('#performBtn').hidden=true;$('#readerOv').querySelectorAll('[data-choice]').forEach(b=>b.disabled=true);
  $('#sceneWhisper').textContent=R.mode==='bedtime'?'故事慢慢发生了。':a.label+'……';
- if(R.mode==='day'){AU.tone(a.id==='whale'?220:440,.3,'triangle',.024);AU.tone(660,.4,'sine',.016,.15);}else AU.tone(330,.65,'sine',.008);
+ if(R.i===4)AU.readerCue(a.id==='song'?'song':'light',R.mode==='bedtime');else if(R.i===0&&R.mode==='day')AU.readerCue('map',false);else if(R.i===2)AU.readerCue('push',R.mode==='bedtime');else AU.tone(R.mode==='day'?440:330,.5,'sine',R.mode==='day'?.024:.008);
 }
 function updatePixelReader(t,dt){
  const R=READER;if(!R||!R.canvas||$('#readerOv').hidden||MENU.open)return;
  R.age+=dt;const quiet=R.mode==='bedtime';
- if(R.animating){R.progress=Math.min(1,R.progress+dt/(RM?.2:quiet?4:2.5));if(R.progress>=1){R.animating=false;R.done=true;
+ if(R.animating){R.progress=Math.min(1,R.progress+dt/(RM?.2:R.i===4?4.2:quiet?4:R.i===2?3.2:2.8));if(R.progress>=1){R.animating=false;R.done=true;
   const a=R.actions[R.selected];$('#readResult').innerHTML=`<p class="read-consequence">${esc(a.result)}</p>`;$('#sceneWhisper').textContent=quiet?'轻轻的，就这样。':'这个办法，留在故事里了。';$('#readNext').hidden=false;$('#readHint').textContent=quiet?'读完这一句，让大人接着讲。':'听完这个办法的结果，再接着讲。';if(!quiet)$('#readNext').focus({preventScroll:true});}}
  pixelWorld(pgx,R.i,S.narrative,quiet,R.age,R.progress,R.selected===null?null:R.actions[R.selected].value||R.actions[R.selected].id);
  if(R.selected!==null&&!R.done&&!R.animating){const [x,y]=pixelTarget(R);pgx.strokeStyle=quiet?'#adad8b':'#f9dc75';pgx.lineWidth=1;pgx.setLineDash([3,3]);pgx.strokeRect(x-18,y-13,36,26);pgx.setLineDash([]);softLight(pgx,x,y,23,.15);pxspr(pgx,PIXSPR[R.actions[R.selected].id]||SP[R.actions[R.selected].id],x-7,y-23,1);}
- R.g.drawImage(PIXEL,0,0,R.canvas.width,R.canvas.height);
+ const focus = R.i===0?[231,111]:R.i===2?[184,137]:R.i===4?[211,119]:null;
+ const zoom = focus && !RM ? 1 + .07 * Math.sin(R.progress * Math.PI) : 1;
+ const sw=320/zoom,sh=180/zoom,cx=focus?clamp(focus[0]-sw/2,0,320-sw):0,cy=focus?clamp(focus[1]-sh/2,0,180-sh):0;
+ R.g.drawImage(PIXEL,cx,cy,sw,sh,0,0,R.canvas.width,R.canvas.height);
 }
 function advanceReader(){
  const R=READER,p=R.page;if(R.mode==='day'&&!R.done)return;
@@ -2950,6 +3083,7 @@ function showPanel(name, quiet) {
   } else if (name === 'settings') {
     box.innerHTML = `${back}<h3>设置</h3><div class="mrule"></div>
       <div class="opt"><span>声音</span>${segHTML('sound', [[true, '开'], [false, '关']])}</div>
+      ${['music','effects'].map(key=>`<div class="opt"><label for="volume-${key}">${key==='music'?'音乐与环境':'动作音效'}</label><div class="volume-control"><input id="volume-${key}" data-volume="${key}" type="range" min="0" max="100" value="${SET[key]}"><output>${SET[key]}</output></div></div>`).join('')}
       <div class="opt"><span>小满说话的速度</span>${segHTML('speed', [['slow', '慢'], ['normal', '正常'], ['fast', '快']])}</div>
       <div class="opt"><span>新手引导</span>${segHTML('guide', [[true, '开'], [false, '关']])}</div>
       <p class="mnote">设置和书架只保存在这台设备的浏览器里。</p>`;
@@ -2981,9 +3115,10 @@ function showPanel(name, quiet) {
 function applySet(key, v) {
   SET[key] = v; store(key, v);
   if (key === 'sound') syncSound();
+  if (key === 'music' || key === 'effects') AU.mix();
   if (key === 'guide') { GUIDE.on = v; if (!v) hideCoach(); }
 }
-function syncSound() { AU.on = SET.sound; $('#soundBtn').textContent = AU.on ? '声音 开' : '声音 关'; $('#soundBtn').setAttribute('aria-pressed', AU.on); }
+function syncSound() { AU.on = SET.sound; AU.mix(); const readerSound = $('#readSound'); if(readerSound){readerSound.textContent=AU.on?'声音 开':'声音 关';readerSound.setAttribute('aria-pressed',AU.on);} $('#soundBtn').textContent = AU.on ? '声音 开' : '声音 关'; $('#soundBtn').setAttribute('aria-pressed', AU.on); }
 async function newNight() {
   leaveReader();
   AU.init();
@@ -2994,6 +3129,11 @@ async function newNight() {
   await playIntro();
   beginStory();
 }
+$('#menuOv').addEventListener('input', e => {
+  const key=e.target.dataset.volume;if(!key)return;
+  AU.init();applySet(key,Number(e.target.value));e.target.nextElementSibling.value=e.target.value;
+});
+document.addEventListener('visibilitychange',()=>{AU.mix();if(AU.c){if(document.hidden)AU.c.suspend();else{AU.c.resume();AU.nextNote=AU.c.currentTime+.15;}}});
 $('#menuOv').addEventListener('click', e => {
   const scene = e.target.closest('[data-scene]');
   if (scene && !scene.disabled) {
@@ -3493,6 +3633,7 @@ function frame(now) {
   mctx.drawImage(wc, c.x, c.y, c.w, c.w * 9 / 16, 0, 0, cv.width, cv.height);
   if (MENU.open) drawMenuBg(t, rdt);
   updatePixelReader(t, rdt);
+  AU.tick();
   requestAnimationFrame(frame);
 }
 
